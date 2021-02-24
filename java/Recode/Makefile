@@ -20,14 +20,14 @@ eclipseclean:
 
 bin: src
 	mkdir -p bin
-	javac -classpath dep/orange-extensions.jar -sourcepath src $(SRCFILES) -d bin
+	javac -sourcepath src $(SRCFILES) -d bin
 	$(foreach res,$(RESFILES),cp src/$(res) bin/$(res);)
 	basename -a src/com/kreative/recode/maps/*.map > src/com/kreative/recode/maps/maps.index
 	cp src/com/kreative/recode/maps/maps.index bin/com/kreative/recode/maps/
 
 doc: src
 	mkdir -p doc
-	javadoc -classpath dep/orange-extensions.jar -sourcepath src $(PACKAGES) -d doc
+	javadoc -sourcepath src $(PACKAGES) -d doc
 
 recode.jar: bin
 	export COPYFILE_DISABLE=true

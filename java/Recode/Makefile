@@ -33,6 +33,7 @@ recode.jar: bin
 	export COPYFILE_DISABLE=true
 	find bin -name .DS_Store -delete
 	jar cmf dep/MANIFEST.MF recode.jar -C bin com/kreative/recode
+	chmod +x recode.jar
 
 Recode.app: dep recode.jar
 	mkdir -p Recode.app/Contents/MacOS

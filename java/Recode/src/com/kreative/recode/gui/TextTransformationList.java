@@ -3,6 +3,8 @@ package com.kreative.recode.gui;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
@@ -17,7 +19,17 @@ public class TextTransformationList extends JList {
 	
 	public TextTransformationList(TextTransformationLibrary txLib) {
 		this.txLib = txLib;
-		this.txNames = txLib.listByName();
+		this.txNames = new ArrayList<String>();
+		this.txNames.addAll(txLib.listByName());
+		this.txNames.sort(new Comparator<String>() {
+			@Override
+			public int compare(String a, String b) {
+				int ac = (a.equalsIgnoreCase("Remap") || a.equalsIgnoreCase("Reinterpret")) ? 0 : 1;
+				int bc = (b.equalsIgnoreCase("Remap") || b.equalsIgnoreCase("Reinterpret")) ? 0 : 1;
+				if (ac != bc) return ac - bc;
+				return a.compareToIgnoreCase(b);
+			}
+		});
 		setListData(txNames.toArray());
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		addMouseListener(new MouseAdapter() {

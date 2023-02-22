@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -107,7 +109,26 @@ public class Recode {
 	}
 	
 	private static void mainGUI(final RecodeArgumentParser a) {
+		try { System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Kreative Recode"); } catch (Exception e) {}
+		try { System.setProperty("apple.laf.useScreenMenuBar", "true"); } catch (Exception e) {}
 		try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) {}
+		
+		try {
+			Method getModule = Class.class.getMethod("getModule");
+			Object javaDesktop = getModule.invoke(Toolkit.getDefaultToolkit().getClass());
+			Object allUnnamed = getModule.invoke(Recode.class);
+			Class<?> module = Class.forName("java.lang.Module");
+			Method addOpens = module.getMethod("addOpens", String.class, module);
+			addOpens.invoke(javaDesktop, "sun.awt.X11", allUnnamed);
+		} catch (Exception e) {}
+		
+		try {
+			Toolkit tk = Toolkit.getDefaultToolkit();
+			Field aacn = tk.getClass().getDeclaredField("awtAppClassName");
+			aacn.setAccessible(true);
+			aacn.set(tk, "Kreative Recode");
+		} catch (Exception e) {}
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

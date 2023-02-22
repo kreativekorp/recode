@@ -350,8 +350,8 @@ public class RecodeArgumentParser {
 	}
 	
 	private void printVersion() {
-		System.out.println("Kreative Recode 1.3");
-		System.out.println("(c) 2012-2013 Kreative Software");
+		System.out.println("Kreative Recode 1.3.1");
+		System.out.println("(c) 2012-2023 Kreative Software");
 	}
 	
 	private void printHelp() {

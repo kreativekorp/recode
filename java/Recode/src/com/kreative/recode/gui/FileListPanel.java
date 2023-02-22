@@ -20,6 +20,7 @@ public class FileListPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private final FileList list;
+	private String lastOpenDirectory = null;
 	
 	public FileListPanel(String caption) {
 		this.list = new FileList();
@@ -49,12 +50,16 @@ public class FileListPanel extends JPanel {
 		addButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				FileDialog fd = new FileDialog((Frame)null, "Select File", FileDialog.LOAD);
+				Frame frame = new Frame();
+				FileDialog fd = new FileDialog(frame, "Select File", FileDialog.LOAD);
+				if (lastOpenDirectory != null) fd.setDirectory(lastOpenDirectory);
 				fd.setVisible(true);
-				if (fd.getDirectory() != null && fd.getFile() != null) {
-					File f = new File(fd.getDirectory(), fd.getFile());
-					FileListPanel.this.list.addFile(f);
-				}
+				String ds = fd.getDirectory(), fs = fd.getFile();
+				fd.dispose();
+				frame.dispose();
+				if (ds == null || fs == null) return;
+				File file = new File((lastOpenDirectory = ds), fs);
+				list.addFile(file);
 			}
 		});
 		removeButton.addActionListener(new ActionListener() {

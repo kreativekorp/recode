@@ -10,7 +10,7 @@ public class RecodeFrame extends JFrame {
 		super("Kreative Recode");
 		setContentPane(new RecodePanel(args));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(1000, 600);
+		setSize(1000, 720);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
